@@ -37,7 +37,7 @@ while not valid_input:  # will ask how a user's day was until a valid input is g
         print('May I tell you a joke to make your day better?\n')
         valid_input = True
     elif user_feeling == 'bad':  # a response for users with a bad day
-        print('\nAww, well keep your hopes up, just make sure tommorow is better!\n')
+        print('\nAww, well keep your hopes up, just make sure tomorrow is better!\n')
         time.sleep(1.2)  # pause to increase user experience
         print('Can I tell you a joke to cheer you up?\n')
         valid_input = True
