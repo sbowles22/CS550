@@ -9,6 +9,7 @@ import time
 import random as rand
 
 
+# Character class for user
 class Character:
 
     def __init__(self):
@@ -23,6 +24,7 @@ class Character:
         self.hp_increase = 0
         self.poison = 0
 
+    # Used in cheats and get class to set the user's class
     def assign_class(self, user_class):
         if user_class == 'warrior':
             self.user_class = 'Warrior'
@@ -47,6 +49,7 @@ class Character:
         else:
             raise ClassCreationError
 
+    # Damages player (or heals if value is negative)
     def damage(self, amount):
         self.hp -= amount
         if self.hp <= 0:
@@ -55,6 +58,7 @@ class Character:
             self.hp = self.max_hp
 
 
+# Exceptions for whern the user dies, enemy dies, assign_class gets a wrong class, and if cheats were activated
 class UserDeath(Exception):
     pass
 
@@ -71,6 +75,7 @@ class Cheat(Exception):
     pass
 
 
+# Class for enemy, very similar to Character class
 class Enemy:
 
     def __init__(self, name, starting_hp, moves):
@@ -88,6 +93,7 @@ class Enemy:
             self.hp = self.max_hp
 
 
+# Class to define a moves properties for easy move creation
 class Move:
 
     def __init__(self, name, damage, accuracy, poison=0):
@@ -306,6 +312,7 @@ def credit():
 """Now a section dedicated to inter-battle sections will begin"""
 
 
+# Function to run through a location
 def run_location(place):
     clear()
     print(location_list[place] + '\n')
@@ -345,6 +352,7 @@ def run_location(place):
 """The section on battles will begin"""
 
 
+# Begins battle with enemy
 def initiate_battle(enemy):
     user.hp = user.max_hp
     user.poison = 0
@@ -363,6 +371,7 @@ def initiate_battle(enemy):
         enemy_death(enemy)
 
 
+# Prints the hp and poison of user and enemy
 def print_condition(enemy):
     clear()
     print(f'Your health: {user.hp} / {user.max_hp}\n'
@@ -371,6 +380,7 @@ def print_condition(enemy):
           f'Poison: {enemy.poison}\n')
 
 
+# Selection menu during battles for player
 def user_menu(enemy):
     print_condition(enemy)
 
@@ -441,6 +451,7 @@ def user_menu(enemy):
             time.sleep(2)
 
 
+# Function uses move on target
 def use(move, target, enemy):
     if rand.randint(1, 100) <= move.accuracy:
         target.damage(move.damage)
@@ -459,6 +470,7 @@ def use(move, target, enemy):
         input('PRESS ENTER TO CONTINUE')
 
 
+# Ends game on user death
 def user_death():
     clear()
     print(f'Sadly, after all of their travels, {user.name} hath been slain.\nThey died with {user.gold} gold in their '
@@ -467,6 +479,7 @@ def user_death():
     quit()
 
 
+# Runs on enemy death
 def enemy_death(enemy):
     clear()
     if enemy.name != 'Dragon':
@@ -491,6 +504,7 @@ def enemy_death(enemy):
 """The section of shops begins"""
 
 
+# Opens a shop menu
 def shop():
     valid_response = False
     while not valid_response:
@@ -530,10 +544,11 @@ bash = Move('Bash', 2, 50)
 crash = Move('Crash', 5, 30)
 bow_and_arrow = Move('Bow and Arrow', 2, 70)
 critical = Move('Critical', 7, 35)
-bite = Move('Bite', 0, 85, 2)
+bite = Move('Bite', 0, 75, 2)
 slash_plus = Move('Slash+', 3, 90)
 tipped_knife = Move('Tipped Knife', 1, 75, 2)
 fire_breath = Move('Fire Breath', 3, 90)
+dragons_curse = Move('Dragon\'s Curse', 0, 50, 3)
 
 # Enemy Creation
 goblin = Enemy('Goblin', 3, [slash])
@@ -541,7 +556,7 @@ elf = Enemy('Elf', 5, [bow_and_arrow, bow_and_arrow, critical])
 gnome = Enemy('Gnome', 7, [bite])
 orc = Enemy('Orc', 10, [crash])
 guard = Enemy('Guard', 9, [slash_plus])
-dragon = Enemy('Dragon', 15, [fire_breath])
+dragon = Enemy('Dragon', 15, [fire_breath, dragons_curse])
 
 # Create global variables for the user and their response
 user = Character()
@@ -563,6 +578,7 @@ location_list = [
     'the dragon\'s lair awaits.'
 ]
 
+# Run all locations
 for i in range(8):
     run_location(i)
 
