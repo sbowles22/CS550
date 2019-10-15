@@ -261,11 +261,11 @@ while True:  # Game loop
                 if list(map(str, [HEIGHT, WIDTH, BOMBS])) == line[:3]:
                     if float(line[3]) > record:  # This block of code overwrites old record if new record is faster
                         line[3] = record
-                        display += f'Congrats on beating your previous record! Your new record is {record} seconds!'
+                        display += f'Congrats on beating your previous record!\n Your new record for a {HEIGHT} x {WIDTH} board with {BOMBS} bombs is {record} seconds!'
                     else:
                         display += f'Better luck next time, and try to beat your old record of {line[3]} seconds!'
                     raise RecursionError  # Chose recursion error as it would otherwise never occur in this code, this raise prevents the "record not found" piece of code from triggering if thw record exists
-            display += f'You set your record of {record} seconds! Try to beat it next time!'  # The record not found piece of code that runs if the record is set with a new set of parameters
+            display += f'You set your record of {record} seconds for a {HEIGHT} x {WIDTH} board with {BOMBS} bombs!\n Try to beat it next time!'  # The record not found piece of code that runs if the record is set with a new set of parameters
             old_record.append([HEIGHT, WIDTH, BOMBS, record])
         except RecursionError:
             pass
